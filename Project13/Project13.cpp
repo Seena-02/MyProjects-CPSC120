@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <stdio.h> 
 using namespace std;
-/*
 void fillArray(int a[]) {
 	for (int i = 0; i < 10; i++) {
 		a[i] = rand() % 100 + 1;
@@ -174,7 +173,7 @@ int main()
 	}
 	cout << "Minimum element in the array is " << *min << "\n";
 	return 0;
-}*/
+}
 
 void swap(int* a, int* b) {
 	int x = *a;
