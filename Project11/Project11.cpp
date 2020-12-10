@@ -1,164 +1,212 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <cmath>
+#include <ctime>
+#include <fstream>
 #include <algorithm>
-using namespace std;
+ using namespace std;
+/*
+ void copyData(string filename, string names[])
+{
+	string name;
+	ifstream inFile; //read
+	inFile.open(filename);
 
-struct PersonInfo {
-	string name,
-		address,
-		city;
-};
-struct Student {
-	int studentID;
-	PersonInfo pData;
-	short year;
-	double gpa;
-};
-
-void fillArray(Student Students[]) {
-	for (int i = 0; i < 10 ; i++) {
-		cout << "Student " << i<< " Enter your name: " << endl;
-		getline(cin, Students[i].pData.name);
-		cout << "Student " << i << " Enter your address " << endl;
-		getline(cin, Students[i].pData.address);
-		cout << "Student " << i << " Enter your city "  << endl;
-		getline(cin, Students[i].pData.city);
-		cout << "Student " << i << " Enter your studentID " << endl;
-		cin >> Students[i].studentID;
-		cout << "Student " << i << " Enter your graduation year " << endl;
-		cin >> Students[i].year;
-		cout << "Student " << i << " Enter your gpa " << endl;
-		cin >> Students[i].gpa;
-		cin.ignore(INT_MAX, '\n');
-		cout << endl;
-	}
-
-}
-
-void displayArray(Student Students[]) {
-	for (int i = 0; i < 10; i++) {
-		cout << "Student " << i << " Here is the information you entered: \n" << Students[i].pData.name << "\n"
-			<< Students[i].pData.address << "\n" << Students[i].pData.city << "\n" << Students[i].studentID << "\n"
-			<< Students[i].year << "\n" << Students[i].gpa << endl;
-
-	}
-	
-}
-
-int linearSearch(Student Students[], int size, string searchName) {
-	for (int i = 0; i <= size; i++)
-		if (searchName == Students[i].pData.name)
-			return i;
-			/*cout << "Student " << i << " here is your information \nName: " << Students[i].pData.name << "\nAddress: "
-				<< Students[i].pData.address << "\nCity: " << Students[i].pData.city << "\nstudentID: " << Students[i].studentID << "\nYear: "
-				<< Students[i].year << "\nGPA: " << Students[i].gpa << endl;*/
-			return -1;
-}
-
-/*int binarySearch(Student Students[10], int size, string searchCity) {
-	//cout << "Student, enter your city to pull up the information you enentered earlier. ";
-	//cin >> searchCity;
-	
-	int low = 0;
-	int high = size - 1;
-
-	int mid;
-	while (low <= high) {
-		//mid = (low + high) / 2;
-		mid = low + (high - low) / 2;
-
-		if (searchCity == Students[mid].pData.city) {
-			return mid;
-		}
-		else if (searchCity > Students[mid].pData.city) {
-			low = mid + 1;
-		}
-		else {
-			high = mid - 1;
-		}
-	}
-	return -1;
-
-}*/
-
-	int binarySearch(string name[], int first, int last, string searchCity)
+	for(int i = 0; inFile >> name; i++)
 	{
-			int mid ;
-			if (last >= first) {
-				mid = first+last / 2;
+	names[i] = name;
+        }
 
-				// If the element is present at the middle 
-				// itself 
-				if (name[mid] == searchCity)
-					return mid +1;
-
-				// If element is smaller than mid, then 
-				// it can only be present in left subarray 
-				else if (name[mid] < searchCity)
-					return binarySearch(name, mid + 1, last, searchCity);
-
-				// Else the element can only be present 
-				// in right subarray
-				else {
-					return binarySearch(name,  first, mid - 1, searchCity);
-				}
-			}
-
-		// We reach here when element is not 
-		// present in array 
-		return -1;
-	}
-
-int main() {
-	string searchName;
-	string searchCity;
-	Student Students[10];
-	//	string name[10];
-	fillArray(Students);
-	displayArray(Students);
-
-	cout << "Student, enter your name to pull up the information you enentered earlier. ";
-	cin >> searchName;
-	int result = linearSearch(Students, 10, searchName);
-	if (result > 0) {
-		cout << "Student " << result << " here is your information..... \nName: " << Students[result].pData.name << "\nAddress: "
-			<< Students[result].pData.address << "\nCity: " << Students[result].pData.city << "\nstudentID: " << Students[result].studentID << "\nYear: "
-			<< Students[result].year << "\nGPA: " << Students[result].gpa << endl;
-	}
-	else {
-		cout << "The name " << searchName << " was not found." << endl;
-	}
-
-	cout << "Student, enter your city to pull up the information you enentered earlier. ";
-	cin >> searchCity;
-	string name[10] = {};
-	for (int i = 0; i < 10; i++) {
-		name[i] = Students[i].pData.city;
-	}
-
-	cout << "-------Unsorted Data-------" << endl;
-	for (int i = 0; i < 10; i++) {
-		cout << name[i] << endl;
-	}
-	int z = sizeof(name) / sizeof(name[0]); //Get the array size
-	sort(name, name + z); //Use the start and end like this
-	//int x = 10;
-	int n = sizeof(name) / sizeof(name[0]);
-	//int result2 = binarySearch(Students, 0, n - 1, searchNum);
-	int result2 = binarySearch(name, 0, n-1, searchCity);
-	if (result2 == -1) {
-		cout << "The array was sorted and the Element is not present in array";
-	}
-	else cout << "The array was sorted and the Element is present at index " << result2;
-	
-	/*if (result2 > 0) {
-		cout << "Student " << result2 << " here is your information..... \nName: " << Students[result2].pData.name << "\nAddress: "
-			<< Students[result2].pData.address << "\nCity: " << Students[result2].pData.city << "\nstudentID: " << Students[result2].studentID << "\nYear: "
-			<< Students[result2].year << "\nGPA: " << Students[result2].gpa << endl;
-	}
-	else {
-		cout << "The studentID " << searchNum << " was not found." << endl;
-	}*/
-	return 0;
 }
+
+void displaynames(string names[])
+{
+for (int i = 0; i < 10; i++) 
+	cout << names[i] << endl;
+}
+
+
+ int main()
+{
+ string names[10];
+ copyData("data.txt", names);
+ //for (int i = 0; i < 10; i++) cout << names[i] << endl;
+ displaynames(names);
+ cout << endl;
+ sort(names, names + 10);
+ displaynames(names);
+
+
+return 0;
+
+}
+
+void displayArray(int a[], int k)
+{
+ for (int i =0; i<k;i++)  cout << a[i]<<" ";
+}
+
+void findMaxMin(int a[], int k, int &max, int &min)
+{
+	max = a[0];
+	min = a[0];
+ for(int i = 1 ; i < k ; i++)
+ {
+  if (a[i] > max) max = a[i];
+  if (a[i] < min) min = a[i];
+ }
+}
+
+float findAverage(int a[], int k)
+{
+int total = 0;
+float average;
+for(int i = 0; i < k; i++ )
+	{
+	total += a[i];
+	}
+average = total / k;
+return average;
+}
+
+void displayMaxMinAve(int max, int min, double average)
+{
+cout << "\nMaximum: " << max << endl;
+cout << "Minimum: " << min << endl;
+cout << "Average: " << average << endl;
+}
+
+
+int main()
+{
+ //display array a
+ int a[7] = {9,11,15,7,20,30,26};
+ cout << "This is the original array a\n";
+ displayArray(a , 7 );
+ //find the maximum and minimum data in array a
+ int max, min;
+ findMaxMin( a, 7, max, min);
+ //find the average of data in array a
+ float average;
+ average = findAverage( a, 7);
+ //display max, min, and average
+ displayMaxMinAve(max, min, average);
+ //sort and display the sorted array a
+ sort( a, a+7);
+ cout << "This is the sorted form of array a\n";
+ displayArray(a, 7);
+ //terminate program
+ return 0;
+}
+*/
+
+
+class Car
+{
+	private:
+		int year;
+		int speed = 0;
+		string make;
+		string model;
+	public:
+		void setYear(int);
+		void setMake(string);
+		void setModel(string);
+		void setSpeed(int);
+
+		int getYear();
+		string getMake();
+		string getModel();
+		int getSpeed();
+
+		void accelerate();
+		void brake();
+};
+
+void Car::setYear(int y)
+{
+year = y;
+	}
+int Car::getYear()
+{
+return year;
+	}
+
+void Car::setMake(string m)
+{
+make = m;
+	}
+string Car::getMake()
+{
+return make;
+	}
+
+void Car::setModel(string mm)
+{
+model = mm;
+	}
+string Car::getModel()
+{
+return model;
+	}
+
+void Car::setSpeed(int s)
+{
+speed = s;
+	}
+int Car::getSpeed()
+{
+return speed;
+	}
+
+void Car::accelerate()
+{
+speed += 10;
+}
+
+void Car::brake()
+{
+speed -= 10;
+}
+
+
+int main()
+{
+Car myCar;
+int myYear = 0;
+string myMake;
+string myModel;
+
+cout << "Enter the year of the car.\n";
+cin >> myYear;
+cout << "Enter the make of the car.\n";
+cin >> myMake;
+cout << "Enter the model of the car.\n";
+cin >> myModel;
+
+myCar.setYear(myYear);
+cout << "Year: " << myCar.getYear() << endl;
+myCar.setMake(myMake);
+cout << "Make: " << myCar.getMake() << endl;
+myCar.setModel(myModel);
+cout << "Model: " << myCar.getModel() << endl;
+
+
+for(int i = 0; i < 23; i++)
+{
+myCar.accelerate();
+cout << "Accelerating...The Speed is " << myCar.getSpeed() << endl;
+}
+
+for(int j = 0; j < 23; j++)
+{
+myCar.brake();
+cout << "Decelerating...The Speed is " << myCar.getSpeed() << endl;
+}
+
+return 0;
+}
+
+
+
